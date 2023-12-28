@@ -9,10 +9,10 @@ const s3 = new AWS.S3({
 });
 
 const dbConfig = {
-  host: "localhost",
-  user: 'root',
-  password: "123456",
-  database: "imageeditor",
+  host: "sql12.freemysqlhosting.net",
+  user: "sql12673237",
+  password: "88TUtpklnP",
+  database: "sql12673237",
 };
 
 export const ImageUploader = async (req, res) => {
@@ -47,7 +47,7 @@ export const ImageUploader = async (req, res) => {
       .json({ message: "Image uploaded and information saved successfully" });
   } catch (error) {
     console.error("Error:", error);
-    
+
     console.error("Database connection failed");
     res.status(500).json({ error: "Internal server error" });
   }
