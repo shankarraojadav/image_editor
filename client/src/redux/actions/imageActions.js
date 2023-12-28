@@ -5,7 +5,7 @@ import {
   IMAGE_SAVE_FAILURE,
 } from "./type";
 
-const url = "http://localhost:3000";
+const url = "https://image-editor-hgzh.onrender.com" || "http://localhost:3000";
 
 export const ImageUploader = (formData, imageName) => async (dispatch) => {
   try {
