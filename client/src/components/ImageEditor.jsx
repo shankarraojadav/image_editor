@@ -9,7 +9,7 @@ import { ImageUploader } from "../redux/actions/imageActions";
 
 const ImageEditor = () => {
   const [image, setImage] = useState(null);
-  const [imageName, setImageName] = useState(null); 
+  const [imageName, setImageName] = useState(null);
   const [brightness, setBrightness] = useState(100);
   const [contrast, setContrast] = useState(100);
   const inputRef = useRef(null);
@@ -33,7 +33,7 @@ const ImageEditor = () => {
 
       reader.onload = () => {
         setImage(reader.result);
-        setImageName(file.name); 
+        setImageName(file.name);
         resolve();
       };
 
@@ -56,12 +56,12 @@ const ImageEditor = () => {
 
   // const handleSave = () => {
   //   setImage(null);
-  //   setImageName(null); 
+  //   setImageName(null);
   // };
 
   const handleDownload = () => {
     const formData = new FormData();
-   
+
     formData.append("image", image);
     dispatch(ImageUploader(formData, imageName));
     const img = new Image();
@@ -87,7 +87,7 @@ const ImageEditor = () => {
   return (
     <div className="main_container">
       <div className="container">
-        <div className="img_editor">
+        <div className={`${image ? "img_editor_class" : "img_editor"}`}>
           <input
             type="file"
             accept="image/*"
@@ -116,13 +116,20 @@ const ImageEditor = () => {
                         alignItems: "center",
                       }}
                     >
-                      <Add color="#EEF5FF" style={{ fontSize: "20vh" }} />
-
-                      <h1 className="upload_text">Drag and drop or Upload Files</h1>
-                      <Button
-                        className="upload_btn"
-                        variant="contained"
+                      <Add style={{ fontSize: "15vh", color: "#86B6F6" }} />
+                      <div
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          justifyContent: "center",
+                          alignItems: "center",
+                        }}
                       >
+                        <h1 className="upload_text">Drag and Drop</h1>
+                        <h2>or</h2>
+                        <h1 className="upload_text">Upload Files</h1>
+                      </div>
+                      <Button className="upload_btn" variant="contained">
                         Upload File
                       </Button>
                     </div>
@@ -133,15 +140,15 @@ const ImageEditor = () => {
                     <img
                       src={image}
                       alt="Uploaded"
+                      className="photo"
                       style={{
-                        width: "100%",
+                        width: "78%",
                         height: "100%",
-                        
+
                         borderRadius: "4px",
                         filter: `brightness(${brightness}%) contrast(${contrast}%)`,
                       }}
                     />
-                    
                   </div>
                 )}
               </div>
@@ -149,28 +156,52 @@ const ImageEditor = () => {
           </Dropzone>
           {image && (
             <div className="img_controll">
-              {imageName && <p>{imageName}</p>}
+              {imageName && <h1>{imageName}</h1>}
               {image && (
                 <div className="img_controllers">
-                  
                   <label>Brightness:</label>
-                  <Slider
-                    value={brightness}
-                    onChange={handleBrightnessChange}
-                    min={0}
-                    max={200}
-                    valueLabelDisplay="auto"
-                    valueLabelFormat={(value) => `${value - 100}%`}
-                  />
+                  <div>
+                    <Slider
+                      value={brightness}
+                      onChange={handleBrightnessChange}
+                      min={0}
+                      max={200}
+                      className="slider_color"
+                      valueLabelDisplay="auto"
+                      valueLabelFormat={(value) => `${value - 100}%`}
+                    />
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      <h3>-</h3>
+                      <h3>+</h3>
+                    </div>
+                  </div>
+
                   <label>Contrast:</label>
-                  <Slider
-                    value={contrast}
-                    onChange={handleContrastChange}
-                    min={0}
-                    max={200}
-                    valueLabelDisplay="auto"
-                    valueLabelFormat={(value) => `${value - 100}%`}
-                  />
+                  <div>
+                    <Slider
+                      value={contrast}
+                      onChange={handleContrastChange}
+                      min={0}
+                      max={200}
+                      className="slider_color"
+                      valueLabelDisplay="auto"
+                      valueLabelFormat={(value) => `${value - 100}%`}
+                    />
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      <h3>-</h3>
+                      <h3>+</h3>
+                    </div>
+                  </div>
                 </div>
               )}
               <div style={{ marginTop: "70vh" }}>
@@ -195,13 +226,10 @@ const ImageEditor = () => {
           <Button
             variant="contained"
             onClick={handleUploadClick}
-            sx={{
-              p: "2vh",
-              background:"#11235A",
-            }}
+            className="upload_btn"
           >
             <UploadFile />
-            Upload Image
+            Upload File
           </Button>
         )}
       </div>
